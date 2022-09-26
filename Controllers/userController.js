@@ -13,7 +13,7 @@ module.exports.updateUser = async(req, res) => {
             const updateUser = await UserModel.findByIdAndUpdate(id, { $set: data }, { new: true })
             res.status(200).json(updateUser)
         } else {
-            res.status(403).json("you are only update your account")
+            res.status(403).json({ message: "you are only update your account" })
         }
     } catch (err) {
         res.status(500).json(err)
@@ -27,9 +27,9 @@ module.exports.deleteUser = async(req, res) => {
 
         if (userId === id || isAdmin) {
             await UserModel.findByIdAndDelete({ _id: id })
-            res.status(200).json("user deleted successfully")
+            res.status(200).json({ message: "user deleted successfully" })
         } else {
-            res.status(403).json("you can only delete your account")
+            res.status(403).json({ message: "you can only delete your account" })
         }
     } catch (err) {
         res.status(500).json(err)
@@ -60,7 +60,7 @@ module.exports.getAllUsers = async(req, res) => {
             const user = query ? await UserModel.find().sort({ _id: -1 }).limit(10) : await UserModel.find().lean()
             res.status(200).json(user)
         } else {
-            res.status(403).json("you are not allowed to see all users")
+            res.status(403).json({ message: "you are not allowed to see all users" })
         }
     } catch (err) {
         res.status(500).json(err)
