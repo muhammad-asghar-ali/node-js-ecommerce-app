@@ -3,6 +3,9 @@ const UserModel = require('../Models/User')
 module.exports.updateUser = async(req, res) => {
     try {
         const { id } = req.params
+        if (!id) {
+            return res.status(400).json({ message: "id is missing" })
+        }
         const { userId, isAdmin } = res.locals.userInfo
         const data = req.body
 
@@ -16,13 +19,16 @@ module.exports.updateUser = async(req, res) => {
             res.status(403).json({ message: "you are only update your account" })
         }
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500).json(err.message)
     }
 }
 
 module.exports.deleteUser = async(req, res) => {
     try {
         const { id } = req.params
+        if (!id) {
+            return res.status(400).json({ message: "id is missing" })
+        }
         const { userId, isAdmin } = res.locals.userInfo
 
         if (userId === id || isAdmin) {
@@ -32,13 +38,16 @@ module.exports.deleteUser = async(req, res) => {
             res.status(403).json({ message: "you can only delete your account" })
         }
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500).json(err.message)
     }
 }
 
 module.exports.getUser = async(req, res) => {
     try {
         const { id } = req.params
+        if (!id) {
+            return res.status(400).json({ message: "id is missing" })
+        }
         const { isAdmin } = res.locals.userInfo
         if (isAdmin) {
             const user = await UserModel.findById({ _id: id })
@@ -47,7 +56,7 @@ module.exports.getUser = async(req, res) => {
         }
 
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500).json(err.message)
     }
 }
 
@@ -63,7 +72,7 @@ module.exports.getAllUsers = async(req, res) => {
             res.status(403).json({ message: "you are not allowed to see all users" })
         }
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500).json(err.message)
     }
 }
 
@@ -88,6 +97,6 @@ module.exports.getStat = async(req, res) => {
         ])
         res.status(200).json(data)
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500).json(err.message)
     }
 }

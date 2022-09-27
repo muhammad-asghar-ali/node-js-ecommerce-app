@@ -15,7 +15,7 @@ module.exports.register = async(req, res) => {
         const token = createJwtToken({ userId: user._id, isAdmin: user.isAdmin })
         res.status(201).json(token);
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500).json(err.message)
     }
 }
 
@@ -40,6 +40,6 @@ module.exports.login = async(req, res) => {
             res.status(400).json({ message: "User not found" });
         }
     } catch (err) {
-        res.status(500).json(err)
+        res.status(500).json(err.message)
     }
 }
