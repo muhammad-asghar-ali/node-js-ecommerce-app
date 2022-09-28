@@ -1,0 +1,11 @@
+const express = require('express')
+const router = express.Router()
+const { verifyToken } = require('../middleware/auth')
+const orderController = require('../Controllers/orderController')
+
+router.post('/', verifyToken, orderController.addOrder)
+router.put('/:id', verifyToken, orderController.updateOrder)
+router.delete('/:id', verifyToken, orderController.deleteOrder)
+router.get('/find/:userId', verifyToken, orderController.getOrderByUser)
+router.get('/', verifyToken, orderController.getAllOrders)
+router.get('/income', orderController.getStat)

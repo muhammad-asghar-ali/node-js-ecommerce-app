@@ -1,6 +1,7 @@
 const express = require("express")
 const productContoller = require('../Controllers/productController')
 const router = express.Router()
+const { verifyToken } = require('../middleware/auth')
 
 // add products
 router.post('/', verifyToken, productContoller.createProduct)
